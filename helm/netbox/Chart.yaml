@@ -1,0 +1,8 @@
+apiVersion: v2
+name: netbox
+description: Infrastructure resource modeling (IRM) tool
+version: 1.0.0
+dependencies:
+  - name: netbox
+    version: 4.1.1
+    repository: https://charts.boo.tc

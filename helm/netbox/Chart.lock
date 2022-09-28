@@ -1,0 +1,6 @@
+dependencies:
+- name: netbox
+  repository: https://charts.boo.tc
+  version: 4.1.1
+digest: sha256:094d0e5f0c6e6f723c4dc04775738f7f07d2cd07f473932f3736ffe6ec6806ca
+generated: "2022-09-28T10:42:50.187555417+02:00"
