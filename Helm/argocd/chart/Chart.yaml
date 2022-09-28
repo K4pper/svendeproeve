@@ -1,0 +1,8 @@
+apiVersion: v1
+name: argo-cd
+description: Declarative GitOps tool built to deploy applications to Kubernetes.
+version: 1.0.0
+dependencies:
+  - name: argo-cd
+    version: 5.4.7
+    repository: https://argoproj.github.io/argo-helm
