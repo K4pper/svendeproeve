@@ -14,5 +14,6 @@ spec:
       valueFiles:
       - values.yaml
   project: netbox
-  syncOptions:
-    - CreateNamespace=true
+  syncPolicy:
+    syncOptions:
+      - CreateNamespace=true
