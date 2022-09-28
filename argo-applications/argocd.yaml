@@ -1,0 +1,16 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: ''
+spec:
+  destination:
+    namespace: argocd
+    server: https://kubernetes.default.svc
+  source:
+    path: helm/argocd/chart
+    repoURL: https://github.com/K4pper/svendeproeve
+    targetRevision: HEAD
+    helm:
+      valueFiles:
+      - values.yaml
+  project: argocd
