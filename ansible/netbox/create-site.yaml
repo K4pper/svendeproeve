@@ -1,0 +1,12 @@
+- name: "Create Netbox region"
+  connection: local
+  hosts: localhost
+  gather_facts: False
+  tasks:
+    - name: "TASK 10: SETUP SITES"
+      netbox.netbox.netbox_site:
+        netbox_url: http://localhost:8000
+        netbox_token: "{{ lookup('env','NETBOX_API_KEY') }}"
+        data:
+          name: Viby
+        state: present
