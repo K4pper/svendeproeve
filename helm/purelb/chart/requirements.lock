@@ -1,0 +1,6 @@
+dependencies:
+- name: purelb
+  repository: https://gitlab.com/api/v4/projects/20400619/packages/helm/stable
+  version: v0.6.4
+digest: sha256:7186488f05d0131b61a5fe92b4a451203a513ab739099262f44e988b946ed7c0
+generated: "2022-11-25T14:08:30.686543238+01:00"

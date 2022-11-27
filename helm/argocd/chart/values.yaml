@@ -1,1 +1,18 @@
-argocd:
+argo-cd:
+  server:
+    replicas: 2
+    ingress:
+      enabled: true
+      ingressClassName: nginx
+      annotations:
+        cert-manager.io/cluster-issuer: nginx-http01
+        nginx.ingress.kubernetes.io/ssl-passthrough: true
+        nginx.ingress.kubernetes.io/backend-protocol: HTTPS
+
+      hosts:
+        - argocd.test.nevergiven.dk
+
+      tls:
+        - secretName: le-cert-argocd-test-nevergiven-dk
+          hosts:
+            - argocd.test.nevergiven.dk
