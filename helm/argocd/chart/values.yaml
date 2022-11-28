@@ -16,3 +16,24 @@ argo-cd:
         - secretName: le-cert-argocd-test-nevergiven-dk
           hosts:
             - argocd.test.nevergiven.dk
+
+    configEnabled: true
+    config:
+      url: https://argocd.test.nevergiven.dk
+      oidc.config: |
+        name: Azure
+        issuer:
+        clientID: 5de9af5f-da60-42d4-bc8b-5f802f7c47c7
+        clientSecret: $oidc.azure.clientSecret
+        requestedIDTokenClaims:
+          groups:
+            essential: true
+        requestedScopes:
+          - openid
+          - profile
+          - email
+
+    rbacConfig:
+      policy.default: ''
+      policy.csv: |
+        g, "argocd_admins", role:admin

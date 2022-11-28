@@ -1,2 +1,85 @@
+azureAppReg:
+  # Client secret will be loaded from /social-auth/netbox-social-auth-client-secret
+  # See load-social-auth.yml in the templates folder.
+  clientId: <set-in-env-values-file>
+  tenantId: b670b8d6-3e49-45e2-a8b9-f93ad1bf9170
+
 netbox:
+  replicaCount: 2
+
+  image:
+    tag: 'v3.3.8'
+
+  remoteAuth:
+    enabled: true
+    defaultGroups:
+      - netbox-viewer
+
   loginRequired: true
+
+  persistence:
+    enabled: true
+
+  extraEnvs:
+    - name: CA_CERT_PATH
+      value: /etc/ssl/certs/redis-ca.crt
+    - name: SKIP_SUPERUSER
+      value: 'true'
+
+    # This is set since the default authentication errors out
+    - name: GOOGLE_APPLICATION_CREDENTIALS
+      value: /secrets/netbox-key/key.json
+
+    - name: settings-py
+      mountPath: /opt/netbox/netbox/netbox/settings.py
+      subPath: settings.py
+      readOnly: true
+
+    - name: load-social-auth-py
+      mountPath: /etc/netbox/config/load-social-auth.py
+      subPath: load-social-auth.py
+      readOnly: true
+
+    - name: netbox-social-auth-client-secret
+      mountPath: /social-auth
+      readOnly: true
+
+  extraVolumes:
+    - name: settings-py
+      configMap:
+        name: settings-py
+
+    - name: load-social-auth-py
+      configMap:
+        name: load-social-auth-py
+
+    - name: netbox-social-auth-client-secret
+      secret:
+        secretName: netbox-social-auth-client-secret
+
+  ingress:
+    enabled: true
+    className: nginx
+    annotations:
+      cert-manager.io/cluster-issuer: nginx-http01
+      nginx.ingress.kubernetes.io/proxy-body-size: 10m
+    hosts:
+      - host: netbox.okcloud.dk
+        paths:
+          - /
+    tls:
+      - secretName: cert-netbox-test-nevergiven-dk
+        hosts:
+          - netbox.test.nevergiven.dk
+
+  worker:
+    extraVolumeMounts:
+      - name: settings-py
+        mountPath: /opt/netbox/netbox/netbox/settings.py
+        subPath: settings.py
+        readOnly: true
+
+    extraVolumes:
+      - name: settings-py
+        configMap:
+          name: settings-py

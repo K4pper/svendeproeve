@@ -3,4 +3,4 @@ nginx-ingress:
     replicaCount: 2
     service:
       externalTrafficPolicy: Local
-      loadBalancerIP: '10.99.20.190'
+      loadBalancerIP: ''

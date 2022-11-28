@@ -1,0 +1,17 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: load-social-auth-py
+data:
+  load-social-auth.py: |
+    from pathlib import Path
+
+    def _load_secret():
+        path = "/social-auth/netbox-social-auth-client-secret"
+        with open(path, 'r') as f:
+          return f.read()
+
+    REMOTE_AUTH_BACKEND = 'social_core.backends.azuread_tenant.AzureADTenantOAuth2'
+    SOCIAL_AUTH_AZUREAD_TENANT_OAUTH2_KEY       = '{{ .Values.azureAppReg.clientId }}'
+    SOCIAL_AUTH_AZUREAD_TENANT_OAUTH2_TENANT_ID = '{{ .Values.azureAppReg.tenantId }}'
+    SOCIAL_AUTH_AZUREAD_TENANT_OAUTH2_SECRET    = _load_secret()
